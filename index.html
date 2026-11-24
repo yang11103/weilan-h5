@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>新疆蔚蓝 · 实体商业增长顾问</title>
+  <style>
+    :root {
+      --bg-outer: #030406;
+      --bg-app: #090b10;
+      --bg-card: #11141d;
+      --bg-card-hover: #171b27;
+      --gold: #d4af37;
+      --gold-light: #f3e5ab;
+      --gold-dim: rgba(212, 175, 55, 0.14);
+      --text-main: #f8fafc;
+      --text-sub: #9ca3af;
+      --text-dim: #6b7280;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(212, 175, 55, 0.42);
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      background: var(--bg-outer);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      height: 100%;
+    }
+
+    /* 手机居中框架（电脑打开呈高级手机端样式，手机打开全屏贴合） */
+    .app-shell {
+      max-width: 480px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: var(--bg-app);
+      position: relative;
+      padding-bottom: 84px;
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+
+    /* 仿小程序顶部栏 */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(9, 11, 16, 0.88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 1px solid var(--border-gold);
+      background: var(--gold-dim);
+      color: var(--gold-light);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-title strong {
+      display: block;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-title span {
+      display: block;
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+
+    .header-pill {
+      font-size: 11px;
+      color: var(--gold-light);
+      border: 1px solid var(--border-gold);
+      background: rgba(212, 175, 55, 0.08);
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-decoration: none;
+    }
+
+    /* 页面切换容器 */
+    .tab-page {
+      display: none;
+      padding: 20px 18px 28px;
+      animation: fadeUp 0.25s ease;
+    }
+
+    .tab-page.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 通用组件 */
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .h1-title {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .gold-text {
+      background: linear-gradient(90deg, #f3e5ab 0%, #d4af37 70%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .lead-text {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .card-gold {
+      border-color: var(--border-gold);
+      background: linear-gradient(155deg, rgba(212, 175, 55, 0.09) 0%, var(--bg-card) 60%);
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 13px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: transform 0.15s, opacity 0.15s;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #e5c158 0%, #c59b27 100%);
+      color: #07080c;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+    }
+
+    /* Tab 1: 首页方案 */
+    .hero-box {
+      background: linear-gradient(160deg, #131724 0%, #090b10 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: 14px;
+      padding: 22px 18px;
+      margin-bottom: 18px;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .stat-row strong {
+      display: block;
+      font-size: 17px;
+      color: var(--gold-light);
+    }
+
+    .stat-row span {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .engine-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .engine-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .engine-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: #07080c;
+      background: var(--gold);
+      padding: 2px 7px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .engine-item h4 {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .engine-item p {
+      font-size: 12px;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    /* Tab 2: 省钱算账计算器 */
+    .chip-group {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .chip-btn {
+      padding: 10px;
+      border-radius: 8px;
+      background: var(--bg-app);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      font-size: 13px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .chip-btn.selected {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    .slider-wrap {
+      margin: 14px 0 8px;
+    }
+
+    .slider-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold);
+      height: 6px;
+      cursor: pointer;
+    }
+
+    .result-banner {
+      text-align: center;
+      padding: 20px 14px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, rgba(212, 175, 55, 0.14), rgba(17, 20, 29, 0.9));
+      border: 1px solid var(--border-gold);
+      margin: 16px 0;
+    }
+
+    .result-banner span {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .result-banner .big-save {
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--gold-light);
+      margin: 4px 0;
+      letter-spacing: -0.5px;
+    }
+
+    .diag-note {
+      font-size: 12px;
+      color: #e5e7eb;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 12px;
+      border-radius: 8px;
+      border-left: 3px solid var(--gold);
+      line-height: 1.6;
+    }
+
+    /* Tab 3: 订阅方案 */
+    .tier-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 18px;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .tier-card.featured {
+      border-color: var(--border-gold);
+      background: linear-gradient(170deg, rgba(212, 175, 55, 0.08) 0%, var(--bg-card) 50%);
+    }
+
+    .tier-tag {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--gold);
+      color: #07080c;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .tier-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .tier-title {
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .tier-price {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--gold-light);
+    }
+
+    .tier-price small {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-dim);
+    }
+
+    .tier-desc {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-bottom: 12px;
+    }
+
+    .tier-ul {
+      list-style: none;
+      font-size: 13px;
+      color: #d1d5db;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 14px;
+    }
+
+    .tier-ul li::before {
+      content: "✓ ";
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* Tab 4: 预约与扫码 */
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 8px;
+      background: var(--bg-app);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--gold);
+    }
+
+    .qr-box {
+      background: #ffffff;
+      color: #090b10;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .qr-box img {
+      width: 170px;
+      height: auto;
+      display: block;
+      margin: 0 auto 10px;
+      border-radius: 8px;
+    }
+
+    .qr-box p {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .qr-box span {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    /* 底部仿小程序 TabBar */
+    .tab-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: rgba(12, 15, 22, 0.94);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+      z-index: 100;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      cursor: pointer;
+      padding: 4px 0;
+    }
+
+    .tab-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    .tab-btn.active {
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    /* 提示浮层 Toast */
+    .toast {
+      position: fixed;
+      top: 72px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: #07080c;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      z-index: 999;
+      display: none;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toast" id="toast">已复制预约单，请长按下方二维码加微信发送</div>
+
+  <div class="app-shell">
+    <!-- 顶部栏 -->
+    <header class="app-header">
+      <div class="brand-mini">
+        <div class="brand-badge">蔚蓝</div>
+        <div class="brand-title">
+          <strong>新疆蔚蓝 · 数字增长顾问</strong>
+          <span>喀什孵化园 206 战略中心</span>
+        </div>
+      </div>
+      <a href="tel:18107550412" class="header-pill">📞 拨打顾问</a>
+    </header>
+
+    <!-- PAGE 1: 首页方案 -->
+    <main class="tab-page active" id="page-home">
+      <div class="hero-box">
+        <div class="eyebrow">2026 COMMERCIAL GROWTH</div>
+        <h1 class="h1-title">
+          重塑实体门店的<br />
+          <span class="gold-text">同城流量与商业转化力</span>
+        </h1>
+        <p class="lead-text" style="margin-bottom: 16px;">
+          不用花 3,500+ 月薪自建试错团队。新疆蔚蓝以 <strong>“AI 策略大脑 + 商业影像制片”</strong> 双核驱动，帮喀什实体门店用 1/3 的成本打爆同城团购核销。
+        </p>
+        <button class="btn btn-gold" onclick="switchTab('book')">领取：免费 5 条定制脚本 + 1 条样片试拍</button>
+
+        <div class="stat-row">
+          <div>
+            <strong>1/3 成本</strong>
+            <span>平替全职员工</span>
+          </div>
+          <div>
+            <strong>72 小时</strong>
+            <span>极速出片交付</span>
+          </div>
+          <div>
+            <strong>对公合规</strong>
+            <span>正规技术公司</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">WHY WEILAN</div>
+        <h3 style="font-size: 17px; margin-bottom: 14px;">双轨内容引擎：流量与品牌兼得</h3>
+        <div class="engine-item">
+          <span class="engine-num">01</span>
+          <div>
+            <h4>黄金 3 秒钩子矩阵（主攻核销）</h4>
+            <p>AI 拆解全疆同品类高转化模板，前 3 秒精准锚定商圈与价格反差，直接撬动左下角团购下单。</p>
+          </div>
+        </div>
+        <div class="engine-item">
+          <span class="engine-num">02</span>
+          <div>
+            <h4>主理人 IP 与品牌叙事（主攻复购）</h4>
+            <p>以连续剧式商业叙事建立门店信任背书，把低价团购客沉淀为只认您招牌的高粘性老客。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-gold" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+        <div>
+          <strong style="font-size:14px; display:block; margin-bottom:2px;">想知道您门店一年能省多少钱？</strong>
+          <span style="font-size:12px; color:var(--text-sub);">点开计算器，10 秒算出人力平替账单</span>
+        </div>
+        <button class="btn btn-outline" style="width:auto; padding:8px 14px; font-size:12px; flex-shrink:0;" onclick="switchTab('calc')">去算账 →</button>
+      </div>
+    </main>
+
+    <!-- PAGE 2: 交互式省钱计算器 -->
+    <main class="tab-page" id="page-calc">
+      <div class="eyebrow">ROI CALCULATOR</div>
+      <h2 class="h1-title" style="font-size:22px;">门店短视频降本测算器</h2>
+      <p class="lead-text">点选您的门店类型与当前预算，看看改用蔚蓝订阅制能省下多少纯利润。</p>
+
+      <div class="card">
+        <label style="font-size:12px; color:var(--text-sub); display:block; margin-bottom:8px;">1. 选择您的门店行业</label>
+        <div class="chip-group" id="industryChips">
+          <div class="chip-btn selected" data-ind="food" onclick="selectIndustry(this)">🔥 餐饮 / 烤肉火锅</div>
+          <div class="chip-btn" data-ind="photo" onclick="selectIndustry(this)">📸 旅拍 / 写真门店</div>
+          <div class="chip-btn" data-ind="beauty" onclick="selectIndustry(this)">✨ 美业 / 洗浴足疗</div>
+          <div class="chip-btn" data-ind="other" onclick="selectIndustry(this)">🏢 其他本地实体</div>
+        </div>
+
+        <div class="slider-wrap">
+          <div class="slider-head">
+            <span style="color:var(--text-sub);">2. 若自招员工 / 传统外包月支出</span>
+            <strong id="costDisplay" style="color:var(--gold-light);">¥4,500 / 月</strong>
+          </div>
+          <input type="range" id="costSlider" min="3000" max="8000" step="500" value="4500" oninput="updateCalc()" />
+        </div>
+
+        <div class="result-banner">
+          <span>切换【蔚蓝 3,000 元核心增长版】，预计一年净省</span>
+          <div class="big-save" id="annualSave">¥18,000</div>
+          <span id="saveSub">且无需承担底薪试错，直接获得 20 条/月精品交付</span>
+        </div>
+
+        <div class="diag-note" id="diagNote">
+          <strong>餐饮门店诊断：</strong>有团购链接却没高频短视频，等于在商圈开了店却锁上大门。用 1,000 元启航版先密集铺开 10 条探店钩子，即可快速拉动冬季核销。
+        </div>
+      </div>
+
+      <button class="btn btn-gold" onclick="switchTab('plans')">查看 1,000 / 3,000 元订阅方案 →</button>
+    </main>
+
+    <!-- PAGE 3: 订阅报价方案 -->
+    <main class="tab-page" id="page-plans">
+      <div class="eyebrow">SUBSCRIPTION PLANS</div>
+      <h2 class="h1-title" style="font-size:22px;">标准化月度订阅方案</h2>
+      <p class="lead-text" style="margin-bottom:14px;">单次定制基准价 ¥300/条；办理月度订阅，单条成本直降 50% 以上。</p>
+
+      <!-- 1000元档 -->
+      <div class="tier-card">
+        <div class="tier-head">
+          <div class="tier-title">同城启航体验版</div>
+          <div class="tier-price">¥1,000<small>/月</small></div>
+        </div>
+        <div class="tier-desc">适合初次测试同城团购流量的门店，低成本快速验证效果。</div>
+        <ul class="tier-ul">
+          <li>每月交付 <strong>8~10 条</strong> 高转化引流视频</li>
+          <li>AI 算法定制前 3 秒黄金钩子脚本</li>
+          <li>单次集中入店拍摄，72 小时内交片</li>
+          <li>附赠门店团购标题及封面视觉调优</li>
+        </ul>
+        <button class="btn btn-outline" onclick="choosePlan('同城启航体验版（1,000元/月）')">选择启航体验版</button>
+      </div>
+
+      <!-- 3000元档 -->
+      <div class="tier-card featured">
+        <div class="tier-tag">主推 · 平替员工</div>
+        <div class="tier-head">
+          <div class="tier-title">核心商业增长版</div>
+          <div class="tier-price">¥3,000<small>/月</small></div>
+        </div>
+        <div class="tier-desc">不到一名学徒的月薪，直接拥有“AI 策略 + 商业导演 + 后期团队”。</div>
+        <ul class="tier-ul">
+          <li>每月交付 <strong>18~20 条</strong> 精品内容（近两天一更）</li>
+          <li>含 <strong>14~15 条</strong> 高频团购核销钩子视频</li>
+          <li>含 <strong>4~5 条</strong> 主理人 IP / 品牌连续剧故事</li>
+          <li>分 2~3 次进店采风，每 10 天数据复盘迭代</li>
+        </ul>
+        <button class="btn btn-gold" onclick="choosePlan('核心商业增长版（3,000元/月）')">锁定核心增长版</button>
+      </div>
+
+      <!-- 6000-9800元档 -->
+      <div class="tier-card">
+        <div class="tier-head">
+          <div class="tier-title">品牌全案旗舰版</div>
+          <div class="tier-price">¥6,000<small>~9,800/月</small></div>
+        </div>
+        <div class="tier-desc">面向连锁品牌与区域大店，构建品牌高阶视觉资产与团队赋能。</div>
+        <ul class="tier-ul">
+          <li>每月 <strong>25+ 条</strong> 全矩阵内容（含品牌宣传大片）</li>
+          <li>内部员工 AI 编导及实操体系带教</li>
+          <li>定制品牌专属招商 / 活动数字官网</li>
+        </ul>
+        <button class="btn btn-outline" onclick="choosePlan('品牌全案旗舰版（6,000~9,800元/月）')">预约旗舰全案沟通</button>
+      </div>
+    </main>
+
+    <!-- PAGE 4: 领航预约与扫码 -->
+    <main class="tab-page" id="page-book">
+      <div class="eyebrow">FREE DIAGNOSTIC</div>
+      <h2 class="h1-title" style="font-size:22px;">预约免费诊断与样片试拍</h2>
+      <p class="lead-text" style="margin-bottom:14px;">每周限 5 家喀什门店：免费送 5 条定制脚本 + 现场试拍 1 条成片，满意再合作。</p>
+
+      <div class="card card-gold">
+        <div class="form-group">
+          <label>您的门店名称</label>
+          <input type="text" class="form-input" id="shopName" placeholder="例如：万达阿亲家烤肉 / 古城XX旅拍" />
+        </div>
+        <div class="form-group">
+          <label>意向合作方案</label>
+          <select class="form-select" id="planSelect">
+            <option value="免费体验礼遇（5条定制脚本 + 1条试拍）">先约免费诊断（5条脚本 + 1条试拍）</option>
+            <option value="同城启航体验版（1,000元/月）">同城启航体验版（1,000元/月）</option>
+            <option value="核心商业增长版（3,000元/月）">核心商业增长版（3,000元/月）</option>
+            <option value="品牌全案旗舰版（6,000~9,800元/月）">品牌全案旗舰版（6,000~9,800元/月）</option>
+          </select>
+        </div>
+        <button class="btn btn-gold" onclick="copyBooking()">一键生成预约单并复制</button>
+        <a href="tel:18107550412" class="btn btn-outline" style="margin-top:10px;">📞 直接致电顾问：181-0755-0412</a>
+      </div>
+
+      <div class="qr-box">
+        <img src="./assets/wechat-qr.jpg" alt="小洋微信二维码" />
+        <p>微信内长按识别二维码 · 立即沟通</p>
+        <span>新疆蔚蓝 · 喀什市就业创业孵化园 206 室</span>
+      </div>
+    </main>
+
+    <!-- 底部仿小程序导航栏 -->
+    <nav class="tab-bar">
+      <button class="tab-btn active" id="nav-home" onclick="switchTab('home')">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>方案</span>
+      </button>
+      <button class="tab-btn" id="nav-calc" onclick="switchTab('calc')">
+        <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="12" x2="10" y2="12"/><line x1="14" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="10" y2="16"/><line x1="14" y1="16" x2="16" y2="16"/></svg>
+        <span>算账</span>
+      </button>
+      <button class="tab-btn" id="nav-plans" onclick="switchTab('plans')">
+        <svg viewBox="0 0 24 24"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+        <span>订阅</span>
+      </button>
+      <button class="tab-btn" id="nav-book" onclick="switchTab('book')">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>预约</span>
+      </button>
+    </nav>
+  </div>
+
+  <script>
+    const diagTexts = {
+      food: '<strong>餐饮门店诊断：</strong>有团购链接却没高频短视频，等于在商圈开了店却锁上大门。用 1,000 元启航版先密集铺开 10 条探店钩子，即可快速拉动堂食与团购核销。',
+      photo: '<strong>旅拍门店诊断：</strong>淡季最忌讳养高薪闲人。用 AI 替代冗杂策划人力，配合早鸟预售短视频，低成本把明年开春旺季的意向客资提前锁定。',
+      beauty: '<strong>美业/洗浴诊断：</strong>同城女性与休闲客群极其看重画面质感与真实口碑。用 3,000 元核心版持续输出套餐钩子 + 店长专业背书，复购率显著提升。',
+      other: '<strong>本地实体诊断：</strong>喀什本地 90% 的同行仍在盲目发店面空镜。抢先用 AI 算法级“前 3 秒黄金钩子”切入同城流量池，即可形成降维收割。'
+    };
+
+    let currentInd = 'food';
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('page-' + tabId).classList.add('active');
+      document.getElementById('nav-' + tabId).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function selectIndustry(el) {
+      document.querySelectorAll('#industryChips .chip-btn').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      currentInd = el.getAttribute('data-ind');
+      document.getElementById('diagNote').innerHTML = diagTexts[currentInd];
+    }
+
+    function updateCalc() {
+      const val = parseInt(document.getElementById('costSlider').value, 10);
+      document.getElementById('costDisplay').textContent = '¥' + val.toLocaleString() + ' / 月';
+      const saveYear = Math.max(0, (val - 3000) * 12);
+      const saveStarter = (val - 1000) * 12;
+      if (saveYear > 0) {
+        document.getElementById('annualSave').textContent = '¥' + saveYear.toLocaleString();
+        document.getElementById('saveSub').textContent = '若先选 1,000 元启航版测试，一年更可省下 ¥' + saveStarter.toLocaleString();
+      } else {
+        document.getElementById('annualSave').textContent = '同价升级 2 倍产能';
+        document.getElementById('saveSub').textContent = '同样 3,000 元预算，从 1 名学徒升级为 AI+专业导演全案团队';
+      }
+    }
+
+    function choosePlan(planName) {
+      document.getElementById('planSelect').value = planName;
+      switchTab('book');
+    }
+
+    function copyBooking() {
+      const shop = document.getElementById('shopName').value.trim() || '喀什本地门店';
+      const plan = document.getElementById('planSelect').value;
+      const text = `【新疆蔚蓝预约】\n门店：${shop}\n意向：${plan}\n希望预约免费 5 条脚本诊断及 1 条样片试拍！`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      }
+      const toast = document.getElementById('toast');
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3500);
+    }
+
+    updateCalc();
+  </script>
+</body>
+</html>

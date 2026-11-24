@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>新疆蔚蓝 · 实体商业数字增长提案 PPT</title>
+  <style>
+    :root {
+      --bg-stage: #030406;
+      --bg-slide: #090b10;
+      --bg-card: #11141d;
+      --bg-card-alt: #161a26;
+      --gold: #d4af37;
+      --gold-light: #f3e5ab;
+      --gold-glow: rgba(212, 175, 55, 0.16);
+      --text-main: #f8fafc;
+      --text-sub: #9ca3af;
+      --text-dim: #6b7280;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(212, 175, 55, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg-stage);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    /* 舞台容器 */
+    .deck-viewport {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* 16:9 黄金画布 */
+    .slide {
+      width: 1280px;
+      height: 720px;
+      background: var(--bg-slide);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.85);
+      position: absolute;
+      padding: 56px 72px;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      background-image:
+        radial-gradient(circle at 88% 12%, rgba(212, 175, 55, 0.08), transparent 42%),
+        radial-gradient(circle at 10% 90%, rgba(56, 189, 248, 0.04), transparent 40%);
+      transform-origin: center center;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: slideFade 0.35s ease;
+    }
+
+    @keyframes slideFade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 幻灯片页眉与页脚 */
+    .slide-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+
+    .slide-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: var(--text-sub);
+      text-transform: uppercase;
+    }
+
+    .slide-brand .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--gold);
+    }
+
+    .slide-eyebrow {
+      font-size: 12px;
+      letter-spacing: 2.5px;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .slide-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+
+    /* 通用排版 */
+    h1.hero-title {
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+    }
+
+    h2.page-title {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+    }
+
+    .page-sub {
+      font-size: 15px;
+      color: var(--text-sub);
+      margin-bottom: 32px;
+    }
+
+    .gold {
+      background: linear-gradient(90deg, #f3e5ab 0%, #d4af37 65%, #b8860b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Slide 1 封面专属 */
+    .cover-pill {
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid var(--border-gold);
+      background: rgba(212, 175, 55, 0.06);
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: var(--gold-light);
+      margin-bottom: 28px;
+    }
+
+    .cover-desc {
+      font-size: 18px;
+      color: var(--text-sub);
+      max-width: 720px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 48px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+
+    .cover-meta div strong {
+      display: block;
+      font-size: 14px;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .cover-meta div span {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* Slide 2 痛点3列大卡片 */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-num {
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+
+    /* Slide 3 对比双栏 */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .compare-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px;
+    }
+
+    .compare-box.gold-box {
+      border-color: var(--border-gold);
+      background: linear-gradient(155deg, rgba(212, 175, 55, 0.08) 0%, var(--bg-card) 60%);
+    }
+
+    .box-tag {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+
+    .gold-box .box-tag {
+      color: var(--gold);
+    }
+
+    .compare-box h3 {
+      font-size: 22px;
+      margin-bottom: 22px;
+    }
+
+    .list-clean {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .list-clean li {
+      font-size: 14px;
+      color: var(--text-sub);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .list-clean li strong {
+      color: var(--text-main);
+    }
+
+    /* Slide 4 流程三步曲 */
+    .process-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .process-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      border-radius: 10px;
+      padding: 30px 26px;
+    }
+
+    .process-step {
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .process-card h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .process-card p {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+
+    /* Slide 6 报价方案 */
+    .anchor-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: 6px;
+      margin-bottom: 22px;
+      font-size: 13px;
+    }
+
+    .pricing-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .price-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .price-box.featured {
+      border-color: var(--border-gold);
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0.09) 0%, var(--bg-card) 50%);
+    }
+
+    .ribbon {
+      position: absolute;
+      top: -11px;
+      right: 20px;
+      background: linear-gradient(135deg, #e5c158, #c59b27);
+      color: #07080c;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+
+    .p-tier {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .p-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .p-num {
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .p-num span {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-sub);
+    }
+
+    .p-desc {
+      font-size: 12px;
+      color: var(--text-sub);
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      min-height: 48px;
+    }
+
+    .p-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      font-size: 13px;
+      color: #d1d5db;
+      flex: 1;
+    }
+
+    .p-list li::before {
+      content: "✓ ";
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .p-foot {
+      margin-top: 14px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+
+    /* Slide 7 4步领航 */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .step-tile {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 26px 22px;
+    }
+
+    .step-tile.active-tile {
+      border-color: var(--border-gold);
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0.08), var(--bg-card));
+    }
+
+    .step-tile .num {
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .step-tile h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .step-tile p {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.65;
+    }
+
+    /* Slide 8 封底 */
+    .closing-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .closing-info h2 {
+      font-size: 36px;
+      margin-bottom: 14px;
+    }
+
+    .closing-items {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-size: 15px;
+      color: var(--text-sub);
+    }
+
+    .closing-items strong {
+      color: var(--text-main);
+    }
+
+    .qr-card {
+      background: #ffffff;
+      color: #090b10;
+      border-radius: 14px;
+      padding: 24px;
+      text-align: center;
+      width: 260px;
+      margin-left: auto;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .qr-card img {
+      width: 190px;
+      height: auto;
+      display: block;
+      margin: 0 auto 12px;
+      border-radius: 8px;
+    }
+
+    .qr-card p {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .qr-card span {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    /* 底部悬浮控制台 */
+    .controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      background: rgba(17, 20, 29, 0.88);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .ctrl-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .ctrl-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+
+    .ctrl-btn.gold-btn {
+      background: linear-gradient(135deg, #e5c158, #c59b27);
+      color: #07080c;
+      border: none;
+      font-weight: 700;
+    }
+
+    .page-indicator {
+      font-size: 12px;
+      color: var(--text-sub);
+      padding: 0 8px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* 完美 16:9 横版 PDF 打印设置 */
+    @page {
+      size: 1280px 720px;
+      margin: 0;
+    }
+
+    @media print {
+      html, body {
+        width: 1280px;
+        height: auto;
+        overflow: visible !important;
+        background: var(--bg-slide) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .controls {
+        display: none !important;
+      }
+      .deck-viewport {
+        display: block !important;
+        width: 1280px !important;
+        height: auto !important;
+      }
+      .slide {
+        display: flex !important;
+        position: relative !important;
+        transform: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        page-break-after: always;
+        break-after: page;
+      }
+      .slide:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="deck-viewport" id="viewport">
+
+    <!-- SLIDE 01: 封面 -->
+    <section class="slide active">
+      <div class="slide-top">
+        <div class="slide-brand"><span class="dot"></span>新疆蔚蓝技术服务有限责任公司</div>
+        <div class="slide-eyebrow">2026 COMMERCIAL PROPOSAL</div>
+      </div>
+      <div class="slide-body">
+        <div>
+          <div class="cover-pill">喀什实体商业 · AI 增长引擎与影像全案</div>
+          <h1 class="hero-title">
+            重塑实体门店的<br />
+            <span class="gold">同城流量与商业转化力</span>
+          </h1>
+          <p class="cover-desc">
+            以数据算法替代盲目试错，以商业影像建立品牌溢价。<br />
+            用不到传统团队 1/3 的订阅成本，为喀什本地实体门店构建可持续的同城到店核销系统。
+          </p>
+          <div class="cover-meta">
+            <div>
+              <strong>机构驻地</strong>
+              <span>喀什市就业创业孵化园 206 室</span>
+            </div>
+            <div>
+              <strong>主理顾问</strong>
+              <span>小洋 · 数字增长与短视频导演</span>
+            </div>
+            <div>
+              <strong>服务模式</strong>
+              <span>按月订阅 · 对公合规交付</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot">
+        <span>WEILAN DIGITAL GROWTH LAB</span>
+        <span>01 / 08</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 02: 行业痛点 -->
+    <section class="slide">
+      <div class="slide-top">
+        <div class="slide-brand"><span class="dot"></span>市场诊断 · MARKET INSIGHT</div>
+        <div class="slide-eyebrow">01 / THE PROBLEM</div>
+      </div>
+      <div class="slide-body">
+        <h2 class="page-title">为什么大多数实体店挂了团购，依然没有客流？</h2>
+        <p class="page-sub">在同城本地生活算法下，没有高质量短视频承接的团购链接，等同于在黄金商圈开了店却锁上了大门。</p>
+        <div class="grid-3">
+          <div class="card">
+            <div>
+              <div class="card-num">¥3,500+</div>
+              <h3>自建团队成本高企</h3>
+            </div>
+            <p>喀什市场招一名普通视频学徒月薪即需 3,000~5,000 元，且极难兼具同城算法思维、商业拍摄与高效后期能力。</p>
+          </div>
+          <div class="card">
+            <div>
+              <div class="card-num">3 秒流失</div>
+              <h3>内容自嗨缺乏钩子</h3>
+            </div>
+            <p>多数门店视频停留在环境空镜与慢动作展示，前 3 秒没有戳中周边顾客痛点，导致播放量停滞、团购转化极低。</p>
+          </div>
+          <div class="card">
+            <div>
+              <div class="card-num">停更断层</div>
+              <h3>缺少工业化稳定产能</h3>
+            </div>
+            <p>老板忙于门店日常经营，内容产出三天打鱼两天晒网，无法形成高频曝光，错失平台同城自然流量的持续倾斜。</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot">
+        <span>新疆蔚蓝 · 实体商业数字增长提案</span>
+        <span>02 / 08</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 03: 破局对比 -->
+    <section class="slide">
+      <div class="slide-top">
+        <div class="slide-brand"><span class="dot"></span>模式革新 · NEW ARCHITECTURE</div>
+        <div class="slide-eyebrow">02 / WHY SUBSCRIPTION</div>
+      </div>
+      <div class="slide-body">
+        <h2 class="page-title">用订阅制替代重人力，把预算花在真实的“产出”上</h2>
+        <p class="page-sub">您不需要养一支团队，只需按月订阅成熟的增长能力。</p>
+        <div class="grid-2">
+          <div class="compare-box">
+            <div class="box-tag">TRADITIONAL · 传统自建/零散外包</div>
+            <h3>高风险、低确定性</h3>
+            <ul class="list-clean">
+              <li><span>•</span><span><strong>固定薪资负担：</strong>每月固定支出数千元底薪，不论是否出爆款都必须承担用人成本。</span></li>
+              <li><span>•</span><span><strong>试错周期漫长：</strong>新员工磨合、学剪辑、摸索同城规则往往耗费数月时间。</span></li>
+              <li><span>•</span><span><strong>单条外包昂贵：</strong>传统机构单条定制报价高昂，且只管拍摄不管同城转化逻辑。</span></li>
+            </ul>
+          </div>
+          <div class="compare-box gold-box">
+            <div class="box-tag">WEILAN MODEL · 蔚蓝订阅制</div>
+            <h3>轻资产、高确定性增长</h3>
+            <ul class="list-clean">
+              <li><span class="gold">✓</span><span><strong>成本直降 2/3：</strong>1,000 元即可启动测试，3,000 元直接平替一名全职视频员工。</span></li>
+              <li><span class="gold">✓</span><span><strong>AI 算法前置护航：</strong>开拍前已完成全疆同类爆款数据拆解，确保每条脚本直击成交。</span></li>
+              <li><span class="gold">✓</span><span><strong>即插即用级交付：</strong>集中化入店采风，72 小时内完成全案精剪交付，快速抢占同城流量。</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot">
+        <span>新疆蔚蓝 · 实体商业数字增长提案</span>
+        <span>03 / 08</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 04: 交付闭环 -->
+    <section class="slide">
+      <div class="slide-top">
+        <div class="slide-brand"><span class="dot"></span>交付引擎 · WORKFLOW</div>
+        <div class="slide-eyebrow">03 / HOW IT WORKS</div>
+      </div>
+      <div class="slide-body">
+        <h2 class="page-title">60% AI 策略大脑 + 40% 商业影像制片</h2>
+        <p class="page-sub">标准化的三步工业化流程，最大化节省您的沟通时间与试错成本。</p>
+        <div class="process-row">
+          <div class="process-card">
+            <div class="process-step">STEP 01 · 数据拆解</div>
+            <h3>AI 爆款模型定制脚本</h3>
+            <p>依托内部 AI 商业分析系统，深度拆解全疆同品类高核销视频结构，提前为您撰写精准卡位商圈与客单价的实战脚本。</p>
+          </div>
+          <div class="process-card">
+            <div class="process-step">STEP 02 · 实景采风</div>
+            <h3>电影级商业影像拍摄</h3>
+            <p>专业导演携电影级数字影像系统入店集中拍摄，高效完成产品质感特写、消费场景还原与主理人表达，不打扰门店正常营业。</p>
+          </div>
+          <div class="process-card">
+            <div class="process-step">STEP 03 · 极速迭代</div>
+            <h3>72 小时交付与数据复盘</h3>
+            <p>3 天内完成全案精剪与黄金大字包装交付；上线后持续追踪同城曝光与团购核销数据，每 10 天动态迭代下一轮脚本。</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot">
+        <span>新疆蔚蓝 · 实体商业数字增长提案</span>
+        <span>04 / 08</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 05: 双轨内容矩阵 -->
+    <section class="slide">
+      <div class="slide-top">
+        <div class="slide-brand"><span class="dot"></span>内容策略 · CONTENT MATRIX</div>
+        <div class="slide-eyebrow">04 / DUAL ENGINE</div>
+      </div>
+      <div class="slide-body">
+        <h2 class="page-title">双轨内容矩阵：既要当下销量，也要长期品牌</h2>
+        <p class="page-sub">拒绝毫无目的的随手拍，每一条影像资产都承担明确的商业转化职能。</p>
+        <div class="grid-2">
+          <div class="compare-box">
+            <div class="box-tag" style="color: var(--gold);">ENGINE 01 · 流量收割机</div>
+            <h3>黄金 3 秒钩子矩阵（15~25 秒）</h3>
+            <p style="font-size:14px; color:var(--text-sub); margin-bottom:20px; line-height:1.7;">
+              专为抖音本地生活同城算法设计。前 3 秒通过“地理位置锚点 + 价格反差 + 视觉冲击”，强行截停周边 5 公里潜在客群，直接引导点击左下角团购下单。
+            </p>
+            <div style="padding:16px; background:rgba(255,255,255,0.03); border-left:3px solid var(--gold); border-radius:4px; font-size:13px; color:#e5e7eb;">
+              <strong>核心指标：</strong>前 3 秒留存率、同城曝光量、团购商品点击核销率。
+            </div>
+          </div>
+          <div class="compare-box">
+            <div class="box-tag" style="color: var(--gold);">ENGINE 02 · 品牌护城河</div>
+            <h3>主理人 IP 与品牌连续剧叙事</h3>
+            <p style="font-size:14px; color:var(--text-sub); margin-bottom:20px; line-height:1.7;">
+              面向核心增长版与品牌旗舰客户。以连续剧形式讲清门店的选材标准、工艺坚持与经营理念，把单纯冲着低价团购来的“过路客”，转化为只认您招牌的“铁杆粉”。
+            </p>
+            <div style="padding:16px; background:rgba(255,255,255,0.03); border-left:3px solid var(--gold); border-radius:4px; font-size:13px; color:#e5e7eb;">
+              <strong>核心指标：</strong>账号粉丝沉淀、老客复购率、门店高客单溢价能力。
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot">
+        <span>新疆蔚蓝 · 实体商业数字增长提案</span>
+        <span>05 / 08</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 06: 会员报价方案（核心页） -->
+    <section class="slide">
+      <div class="slide-top">
+        <div class="slide-brand"><span class="dot"></span>服务报价 · SUBSCRIPTION PLANS</div>
+        <div class="slide-eyebrow">05 / PRICING ARCHITECTURE</div>
+      </div>
+      <div class="slide-body">
+        <h2 class="page-title" style="margin-bottom: 14px;">标准化月度订阅方案 · 透明可控</h2>
+        <div class="anchor-strip">
+          <span><strong>单次定制基准价：¥300 / 条</strong>（单次入店策划拍摄与成片交付，仅作零散补充参考）</span>
+          <span style="color: var(--gold-light); font-weight: 600;">办理月度订阅卡，单条综合成本直降 50% 以上 →</span>
+        </div>
+        <div class="pricing-row">
+          <!-- 1000元 -->
+          <div class="price-box">
+            <div class="p-tier">TIER 01 · STARTER</div>
+            <div class="p-name">同城启航体验版</div>
+            <div class="p-num">¥1,000 <span>/ 月</span></div>
+            <div class="p-desc">适合初次启动线上引流、低成本验证同城团购爆发力的门店。</div>
+            <ul class="p-list">
+              <li>每月交付 <strong>8~10 条</strong> 高转化钩子视频</li>
+              <li>AI 算法定制前 3 秒爆款脚本</li>
+              <li>商业影像入店实拍与精剪交付</li>
+              <li>附赠门店团购标题及封面调优</li>
+            </ul>
+            <div class="p-foot"><strong>节奏：</strong>单次集中入店拍完，72 小时内全案交片</div>
+          </div>
+          <!-- 3000元 主推 -->
+          <div class="price-box featured">
+            <div class="ribbon">主推 · 平替全职员工</div>
+            <div class="p-tier">TIER 02 · GROWTH</div>
+            <div class="p-name">核心商业增长版</div>
+            <div class="p-num">¥3,000 <span>/ 月</span></div>
+            <div class="p-desc">以不到一名普通学徒的月薪，直接享有“AI 策略 + 商业导演 + 后期”全套团队。</div>
+            <ul class="p-list">
+              <li>每月交付 <strong>18~20 条</strong> 精品商业内容</li>
+              <li>含 <strong>14~15 条</strong> 高频团购带货钩子矩阵</li>
+              <li>含 <strong>4~5 条</strong> 主理人 IP / 品牌连续剧</li>
+              <li>每 10 天数据复盘并动态迭代新剧本</li>
+              <li>紧贴店庆、上新与节假日活动排期</li>
+            </ul>
+            <div class="p-foot"><strong>节奏：</strong>每月分 2~3 次进店采风，支持提前定制选题</div>
+          </div>
+          <!-- 6000-9800元 -->
+          <div class="price-box">
+            <div class="p-tier">TIER 03 · FLAGSHIP</div>
+            <div class="p-name">品牌全案旗舰版</div>
+            <div class="p-num">¥6,000 <span>~ 9,800 / 月</span></div>
+            <div class="p-desc">面向连锁品牌与头部大店，构建品牌高阶视觉资产与内部团队赋能。</div>
+            <ul class="p-list">
+              <li>每月 <strong>25+ 条</strong> 全矩阵商业内容及宣传片</li>
+              <li>品牌微纪录片及多门店联动策划</li>
+              <li>内部员工 AI 编导与实操体系带教</li>
+              <li>定制品牌专属招商 / 活动数字官网</li>
+            </ul>
+            <div class="p-foot"><strong>节奏：</strong>按周驻店深度陪跑，支持正规对公发票</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot">
+        <span>新疆蔚蓝 · 实体商业数字增长提案</span>
+        <span>06 / 08</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 07: 领航礼遇 -->
+    <section class="slide">
+      <div class="slide-top">
+        <div class="slide-brand"><span class="dot"></span>合作路径 · ONBOARDING</div>
+        <div class="slide-eyebrow">06 / EXCLUSIVE PRIVILEGE</div>
+      </div>
+      <div class="slide-body">
+        <h2 class="page-title">零风险先验货：领航门店专属体验礼遇</h2>
+        <p class="page-sub">每周仅开放 5 个喀什本地门店名额 —— 先看定制脚本与实拍样片效果，满意后再开启正式订阅。</p>
+        <div class="grid-4">
+          <div class="step-tile active-tile">
+            <div class="num">STEP 01 · 免费</div>
+            <h3>进店商业诊断</h3>
+            <p>携同城数据模型上门沟通，现场免费为您呈现 5 套针对本店痛点的定制化高转化脚本思路。</p>
+          </div>
+          <div class="step-tile active-tile">
+            <div class="num">STEP 02 · 免费</div>
+            <h3>实景样片试拍</h3>
+            <p>现场实拍并精剪交付第 1 条成片，让您零成本直观检验影像质感与真实的同城流量反馈。</p>
+          </div>
+          <div class="step-tile">
+            <div class="num">STEP 03 · 启航</div>
+            <h3>1,000 元月卡测试</h3>
+            <p>认可效果后开启启航版，单次集中拍齐 10 条密集铺开同城流量池，快速验证团购核销。</p>
+          </div>
+          <div class="step-tile">
+            <div class="num">STEP 04 · 增长</div>
+            <h3>3,000 元全案平替</h3>
+            <p>跑通获客闭环后无缝升级核心增长版，由我们接管全年稳定更新，彻底省去招人烦恼。</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot">
+        <span>新疆蔚蓝 · 实体商业数字增长提案</span>
+        <span>07 / 08</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 08: 封底联系 -->
+    <section class="slide">
+      <div class="slide-top">
+        <div class="slide-brand"><span class="dot"></span>联系我们 · CONNECT</div>
+        <div class="slide-eyebrow">07 / THANK YOU</div>
+      </div>
+      <div class="slide-body">
+        <div class="closing-grid">
+          <div class="closing-info">
+            <div class="cover-pill" style="margin-bottom: 18px;">期待与您的品牌共同开启同城增长</div>
+            <h2>新疆蔚蓝技术服务<br /><span class="gold">有限责任公司</span></h2>
+            <p style="font-size: 15px; color: var(--text-sub); margin-top: 10px;">
+              让专业团队接管您的线上增长引擎，让您更专注于打磨线下产品与顾客体验。
+            </p>
+            <div class="closing-items">
+              <div><strong>机构驻地：</strong>喀什市就业创业孵化园 206 室（诚邀莅临品茗洽谈）</div>
+              <div><strong>合作专线：</strong><span style="color: var(--gold-light); font-weight: 700; font-size: 18px;">181-0755-0412</span>（手机同微信）</div>
+              <div><strong>主理顾问：</strong>小洋 · 喀什短视频导演 / 数字增长顾问</div>
+            </div>
+          </div>
+
+          <div class="qr-card">
+            <img src="./assets/wechat-qr.jpg" alt="小洋微信二维码" />
+            <p>微信扫码 · 预约免费门店诊断</p>
+            <span>请备注：门店名称 / 所属行业</span>
+          </div>
+        </div>
+      </div>
+      <div class="slide-foot">
+        <span>WEILAN DIGITAL GROWTH LAB · KASHGAR</span>
+        <span>08 / 08</span>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 底部控制栏 -->
+  <div class="controls">
+    <button class="ctrl-btn" onclick="prevSlide()">← 上一页</button>
+    <span class="page-indicator" id="pageIndicator">01 / 08</span>
+    <button class="ctrl-btn" onclick="nextSlide()">下一页 →</button>
+    <button class="ctrl-btn" onclick="toggleFullscreen()">全屏演示</button>
+    <button class="ctrl-btn gold-btn" onclick="window.print()">导出 16:9 高清 PDF</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('pageIndicator');
+    let current = 0;
+
+    function showSlide(index) {
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === index);
+      });
+      current = index;
+      indicator.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+    }
+
+    function nextSlide() {
+      if (current < slides.length - 1) showSlide(current + 1);
+    }
+
+    function prevSlide() {
+      if (current > 0) showSlide(current - 1);
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // 自适应窗口缩放，确保 1280x720 完美居中不裁切
+    function fitScale() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const scale = Math.min((vw - 32) / 1280, (vh - 80) / 720, 1.15);
+      slides.forEach(s => {
+        s.style.transform = `scale(${scale})`;
+      });
+    }
+
+    window.addEventListener('resize', fitScale);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') nextSlide();
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+    });
+
+    fitScale();
+  </script>
+</body>
+</html>
